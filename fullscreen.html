@@ -1,0 +1,105 @@
+<style>
+/* Full-screen button for live maps: expands the map to fill the browser window.
+   Present with the deck in full screen (press F) and the map fills the screen. */
+.map-wrap { position: relative; display: inline-block; line-height: 0; }
+.map-fs-btn {
+  position: absolute; top: -48px; right: 0; z-index: 2;
+  font: 600 16px/1.2 "Source Sans Pro", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  padding: 7px 14px; border: 1px solid #4d1979; border-radius: 4px;
+  background: #ffffff; color: #4d1979; cursor: pointer;
+}
+.map-fs-btn:hover { background: #4d1979; color: #ffffff; }
+.map-wrap.expanded { position: fixed; z-index: 1000; margin: 0; background: #000000; }
+.map-wrap.expanded iframe {
+  width: 100% !important; height: 100% !important;
+  max-width: none !important; max-height: none !important;
+}
+.map-wrap.expanded .map-fs-btn {
+  top: 12px; right: auto; left: 50%; transform: translateX(-50%); opacity: 0.92;
+}
+body.map-expanded .reveal .footer,
+body.map-expanded .reveal .slide-number,
+body.map-expanded .reveal .progress,
+body.map-expanded .reveal .controls,
+body.map-expanded .slide-menu-button { display: none !important; }
+
+/* Compact quotes for the response slides */
+.quotes blockquote {
+  font-size: 0.62em; padding: 0.55em 0.9em; margin: 0.45em 0;
+  width: auto; box-shadow: none; text-align: left;
+}
+.quotes blockquote p { margin: 0; }
+.quotes.two-col { column-count: 2; column-gap: 24px; }
+.quotes.two-col blockquote { break-inside: avoid; }
+</style>
+
+<script>
+(function () {
+  function place(wrap) {
+    // Find where the wrapper's containing block sits on screen and how much
+    // reveal.js has scaled it, then size the wrapper to cover the window.
+    wrap.style.left = "0px";
+    wrap.style.top = "0px";
+    wrap.style.width = "";
+    wrap.style.height = "";
+    var r = wrap.getBoundingClientRect();
+    var s = r.width / wrap.offsetWidth || 1;
+    wrap.style.left = -r.left / s + "px";
+    wrap.style.top = -r.top / s + "px";
+    wrap.style.width = window.innerWidth / s + "px";
+    wrap.style.height = window.innerHeight / s + "px";
+  }
+  function collapse(wrap) {
+    wrap.classList.remove("expanded");
+    ["left", "top", "width", "height"].forEach(function (p) { wrap.style[p] = ""; });
+    wrap.querySelector(".map-fs-btn").textContent = "Full screen";
+    document.body.classList.remove("map-expanded");
+  }
+  function expand(wrap) {
+    wrap.classList.add("expanded");
+    document.body.classList.add("map-expanded");
+    wrap.querySelector(".map-fs-btn").textContent = "Exit full screen";
+    place(wrap);
+  }
+  function toggle(wrap) {
+    if (wrap.classList.contains("expanded")) collapse(wrap); else expand(wrap);
+  }
+  function collapseAll() {
+    document.querySelectorAll(".map-wrap.expanded").forEach(collapse);
+  }
+
+  document.querySelectorAll(".reveal .slides iframe").forEach(function (frame) {
+    var wrap = document.createElement("div");
+    wrap.className = "map-wrap";
+    frame.parentNode.insertBefore(wrap, frame);
+    wrap.appendChild(frame);
+    var btn = document.createElement("button");
+    btn.className = "map-fs-btn";
+    btn.type = "button";
+    btn.textContent = "Full screen";
+    btn.addEventListener("click", function (e) {
+      e.stopPropagation();
+      toggle(wrap);
+    });
+    wrap.appendChild(btn);
+  });
+
+  window.addEventListener("resize", function () {
+    setTimeout(function () {
+      document.querySelectorAll(".map-wrap.expanded").forEach(place);
+    }, 50);
+  });
+
+  function bind() {
+    Reveal.on("slidechanged", collapseAll);
+    // Press X on a map slide to toggle (works until you click into the map)
+    Reveal.addKeyBinding({ keyCode: 88, key: "X", description: "Map full screen" }, function () {
+      var wrap = Reveal.getCurrentSlide().querySelector(".map-wrap");
+      if (wrap) toggle(wrap);
+    });
+  }
+  if (window.Reveal) {
+    if (Reveal.isReady()) bind(); else Reveal.on("ready", bind);
+  }
+})();
+</script>

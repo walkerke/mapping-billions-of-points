@@ -1,0 +1,8 @@
+.quarto/
+.DS_Store
+*_cache/
+
+# working copies not used in the deck (unredacted screenshots of other accounts)
+img/*-raw.*
+img/x-followup*.jpg
+img/quote-[234].png

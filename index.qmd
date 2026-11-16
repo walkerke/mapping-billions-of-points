@@ -1,0 +1,202 @@
+---
+title: "Mapping Billions of Points"
+author: "Kyle Walker"
+institute: "Department of Geography, TCU"
+date: "2026-11-16"
+date-format: "MMMM D, YYYY"
+format:
+  revealjs:
+    theme: [default, _extensions/tcu/tcu-theme.scss]
+    footer: "Mapping Billions of Points | Kyle Walker"
+    transition: fade
+    transition-speed: fast
+    slide-number: true
+    hash: true
+    center: true
+    highlight-style: github
+    code-line-numbers: false
+    fig-align: center
+    embed-resources: false
+    include-after-body: fullscreen.html
+title-slide-attributes:
+  data-background-color: "#4d1979"
+---
+
+## A goal for 2026
+
+* This year, I wanted to see if I could map over a billion points on my laptop
+
+---
+
+### Should you map?
+
+* Beware the "amazing map"...
+
+<div style="text-align: center;"><img src="img/clickhole.png" style="width: 480px"><figcaption>Source: [Clickhole (The Onion)](https://clickhole.com/we-put-700-red-dots-on-a-map-1825122391/)</figcaption></div>
+
+---
+
+## Why map a billion points?
+
+* Some datasets get this large when they count individuals: every job in the US, or every person in India
+* Dot maps can show _mixing_ of groups that maps of counties or states will hide
+
+---
+
+## About me
+
+* Professor and Chair of Geography at TCU
+* Research: demographic change in US metropolitan areas
+* Software: __tidycensus__, __tigris__, __mapgl__, __freestiler__
+* Book: [_Analyzing US Census Data_](https://walker-data.com/census-r/)
+
+---
+
+## Dot-density mapping
+
+* Dot-density maps scatter dots in proportion to the data; dots can be colored to show mixing of categories
+* I've been making maps like this for over 10 years
+
+---
+
+### Educational Attainment in America
+
+<iframe data-src="https://personal.tcu.edu/kylewalker/maps/education/" width="1000" height="520" frameborder="0"></iframe>
+
+---
+
+### Mapping Immigrant America
+
+<iframe data-src="https://personal.tcu.edu/kylewalker/immigrant-america/" width="1000" height="520" frameborder="0"></iframe>
+
+---
+
+## Tiled mapping
+
+<div style="text-align: center;"><img src="img/tiled-mapping.png" style="width: 560px"></div>
+
+* _Vector tiles_: small pieces of data that your browser loads as you pan and zoom
+
+---
+
+## The old workflow
+
+* Slow dot-generation pipelines, run state by state
+* Hosting on Mapbox, which is expensive (but they've subsidized my work)
+* A note in my code: "Re-instate this when the map views have calmed down"
+
+---
+
+## freestiler
+
+* __freestiler__: R and Python package I wrote this year to build vector tiles directly from your data
+* The output is a single file that can be hosted on inexpensive cloud storage
+
+---
+
+### 153 million jobs
+
+<iframe data-src="https://walker-data.com/freestiler/lodes/" width="1000" height="500" frameborder="0"></iframe><figcaption>Data: 2024 LODES, US Census Bureau. Tiling took about 6 minutes on my laptop.</figcaption>
+
+---
+
+### 331 million people
+
+<iframe data-src="https://walker-data.com/maps/census-2020/race.html" width="1000" height="500" frameborder="0"></iframe><figcaption>Data: 2020 Census. Dot locations are simulated within Census blocks.</figcaption>
+
+---
+
+## Dots, hexagons, or clusters?
+
+<div style="display: flex; justify-content: center; gap: 12px;"><img src="img/race-tarrant-dots.png" style="width: 330px"><img src="img/race-tarrant-hex.png" style="width: 330px"><img src="img/race-tarrant-clusters.png" style="width: 330px"></div>
+
+* Dots show density the best; hexagons show broad patterns; clusters show proportions
+
+---
+
+## Back to a billion points
+
+* In April, my first attempt at a billion points failed
+* Solution: split the data into smaller pieces, and tile them in parallel
+
+---
+
+## 1.47 billion dots
+
+<div style="text-align: center;"><img src="img/india-national.jpg" style="width: 660px"></div>
+
+* 1 dot for every person in India; tiling took about 21 minutes on my MacBook
+
+---
+
+### Northern India
+
+<div style="text-align: center;"><img src="img/india-ganges.jpg" style="width: 940px"></div>
+
+---
+
+### Mumbai
+
+<div style="text-align: center;"><img src="img/india-mumbai.jpg" style="width: 940px"></div>
+
+---
+
+## The response
+
+<div style="display: flex; align-items: center; gap: 24px;"><div><img src="img/x-india-post.jpg" style="width: 400px"></div><div style="flex: 1;">
+
+* Posted on X on September 18; viewed over 800,000 times
+* Some viewers read the map very differently than I intended...
+
+</div></div>
+
+---
+
+### The response
+
+<div style="display: flex; align-items: center; gap: 24px;"><div><img src="img/quote-1.png" style="width: 420px"></div><div class="quotes" style="flex: 1; font-size: 1.45em;">
+
+> "I don't remember giving consent to my data for this."
+
+> "Everyone of you is marked digitally"
+
+</div></div>
+
+---
+
+### The response
+
+* Privacy: is this a database of where every person lives?
+* Consent: who shared this data with a researcher in the US?
+* Other viewers replied to explain that the data are modeled
+
+---
+
+## How the dots were made
+
+<div style="display: flex; align-items: center; gap: 24px;"><div style="flex: 1;">
+
+* WorldPop is a _model_ of how many people live in each 100m grid cell; dots are placed randomly within those cells
+* The dots do not represent the locations of individuals
+
+</div><div><img src="img/india-street.jpg" style="width: 520px"><figcaption>Mumbai, fully zoomed in</figcaption></div></div>
+
+---
+
+## Should you map a billion points?
+
+* The concern is reasonable: detailed dot maps look precise, regardless of how the data were made
+* It may matter who is making the map, and who is being mapped
+* For discussion: what do viewers assume when they can zoom in to a single dot?
+
+---
+
+## Thank you!
+
+**Kyle Walker**
+
+Professor & Chair of Geography, TCU
+
+kyle@walker-data.com
+
+[walker-data.com/freestiler](https://walker-data.com/freestiler)
