@@ -38,7 +38,7 @@ title-slide-attributes:
 
 ## Why map a billion points?
 
-* Web maps with massive datasets exist - Google Maps, for example - but they require... Google
+* Google Maps shows billions of building footprints - but that requires... Google
 * Until recently, an individual mapper couldn't really make and maintain something like that
 
 ---
