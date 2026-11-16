@@ -46,7 +46,7 @@ title-slide-attributes:
 ## About me
 
 * Professor and Chair of Geography at TCU
-* Research: demographic change in US metropolitan areas
+* Research: open source geospatial and demographic software tools
 * Software: __tidycensus__, __tigris__, __mapgl__, __freestiler__
 * Book: [_Analyzing US Census Data_](https://walker-data.com/census-r/)
 
