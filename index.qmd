@@ -38,8 +38,8 @@ title-slide-attributes:
 
 ## Why map a billion points?
 
-* Some datasets get this large when they count individuals: every job in the US, or every person in India
-* Dot maps can show _mixing_ of groups that maps of counties or states will hide
+* Web maps with massive datasets exist - Google Maps, for example - but they require... Google
+* Until recently, an individual mapper couldn't really make and maintain something like that
 
 ---
 
